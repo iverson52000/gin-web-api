@@ -15,3 +15,30 @@ content-type: application/json
 ###
 POST https://localhost:9000/v1/user/register
 
+
+###
+GET http://localhost:9000/v1/restaurants HTTP/1.1
+
+###
+POST http://localhost:9000/v1/restaurants HTTP/1.1
+content-type: application/json
+
+{
+    "name": "MacDonald",
+    "type": "fastfood",
+    "rating": 3
+}
+
+###
+
+PATCH http://localhost:9000/v1/restaurant/3 HTTP/1.1
+content-type: application/json
+
+{
+    "name": "KFC",
+    "type": "Solu food!"
+
+}
+
+###
+DELETE  http://localhost:9000/v1/restaurant/2 HTTP/1.1
