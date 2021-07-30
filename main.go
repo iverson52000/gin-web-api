@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"gin-web-api/controllers"
 	"gin-web-api/db"
+	"gin-web-api/routes"
 	"log"
 	"net/http"
 	"os"
@@ -25,23 +25,16 @@ func main() {
 	db.Init()
 
 	r := gin.Default()
-	v1 := r.Group("/v1")
-	{
-		v1.GET("/", func(c *gin.Context) {
-			c.JSON(http.StatusOK, gin.H{
-				"message": "Gin is working!",
-			})
-		})
-		v1.GET("/restaurants", controllers.AllRestaurants)
-		v1.GET("/restaurant/:id", controllers.OneRestaurant)
-		v1.POST("/restaurant", controllers.CreateRestaurant)
-		v1.PATCH("/restaurant/:id", controllers.UpdateRestaurant)
-		v1.DELETE("/restaurant/:id", controllers.DeleteRestaurant)
 
-		v1.POST("/user/register", controllers.Register)
-		v1.GET("/users", controllers.AllUser)
-		v1.POST("/user/logout", controllers.Logout)
-	}
+	//testing route
+	r.GET("/", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "Gin is working!",
+		})
+	})
+
+	routes.RestaurantRoutes(r)
+	routes.UserRoutes(r)
 
 	r.Run(":" + port)
 

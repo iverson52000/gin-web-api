@@ -15,6 +15,11 @@ type CreateUserInput struct {
 	Password string `json:"password" binding:"required"`
 }
 
+type UserLoginInput struct {
+	Email    string `json:"email" binding:"required"`
+	Password string `json:"password" binding:"required"`
+}
+
 func Register(c *gin.Context) {
 	// Validate input
 	var input CreateUserInput
@@ -45,9 +50,33 @@ func Register(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": user})
 }
 
-// func Login(c *gin.Context) {
+func Login(c *gin.Context) {
+	var input UserLoginInput
 
-// }
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	var user models.User
+	res := db.GetDB().Where("email = ?", input.Email).First(&user)
+	if res.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "user does not exist"})
+		return
+	}
+
+	bytePassword := []byte(input.Password)
+	byteHashedPassword := []byte(user.Password)
+
+	err := bcrypt.CompareHashAndPassword(byteHashedPassword, bytePassword)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "wrong password"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Login successiful"})
+}
 
 func Logout(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Successfully logged out!"})
