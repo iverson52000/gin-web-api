@@ -71,8 +71,8 @@ func UpdateRestaurant(c *gin.Context) {
 	}
 
 	// Update restaurant
-	newRestaurant := models.Restaurant{Name: input.Name, Type: input.Type, Rating: input.Rating}
-	db.GetDB().Model(&restaurant).Updates(newRestaurant)
+	updatedRestaurant := models.Restaurant{Name: input.Name, Type: input.Type, Rating: input.Rating}
+	db.GetDB().Model(&restaurant).Updates(updatedRestaurant)
 
 	c.JSON(http.StatusOK, gin.H{"data": restaurant})
 }

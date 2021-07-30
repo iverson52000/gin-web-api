@@ -1,8 +1,3 @@
-GET http://localhost:9000/ HTTP/1.1
-
-###
-GET http://localhost:9000/v1/article/7 HTTP/1.1
-
 ###
 POST http://localhost:9000/v1/user/login HTTP/1.1
 content-type: application/json
@@ -37,8 +32,23 @@ content-type: application/json
 {
     "name": "KFC",
     "type": "Solu food!"
-
 }
 
 ###
 DELETE  http://localhost:9000/v1/restaurant/2 HTTP/1.1
+
+###
+POST  http://localhost:9000/v1/user/register HTTP/1.1
+content-type: application/json
+
+{
+    "name": "KFC",
+    "email": "abc@gmail.com",
+    "password": "123"
+}
+
+###
+GET http://localhost:9000/v1/users HTTP/1.1
+
+###
+POST http://localhost:9000/v1/user/logout HTTP/1.1

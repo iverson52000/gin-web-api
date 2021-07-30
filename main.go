@@ -17,6 +17,7 @@ func main() {
 	if err != nil {
 		log.Fatal("error: failed to load the env file")
 	}
+
 	port := os.Getenv("PORT")
 	fmt.Printf(" env vars: \n PORT: %s \n ENV: %s \n SSL: %s \n Version: %s \n\n",
 		port, os.Getenv("ENV"), os.Getenv("SSL"), os.Getenv("API_VERSION"))
@@ -36,6 +37,10 @@ func main() {
 		v1.POST("/restaurant", controllers.CreateRestaurant)
 		v1.PATCH("/restaurant/:id", controllers.UpdateRestaurant)
 		v1.DELETE("/restaurant/:id", controllers.DeleteRestaurant)
+
+		v1.POST("/user/register", controllers.Register)
+		v1.GET("/users", controllers.AllUser)
+		v1.POST("/user/logout", controllers.Logout)
 	}
 
 	r.Run(":" + port)
