@@ -3,10 +3,12 @@ package main
 import (
 	"fmt"
 	"gin-web-api/db"
+	"gin-web-api/middlewares"
 	"gin-web-api/routes"
 	"log"
 	"net/http"
 	"os"
+	"runtime"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -25,6 +27,7 @@ func main() {
 	db.Init()
 
 	r := gin.Default()
+	r.Use(middlewares.CORSMiddleware())
 
 	//testing route
 	r.GET("/", func(c *gin.Context) {
@@ -33,9 +36,22 @@ func main() {
 		})
 	})
 
+	r.GET("/index", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "index.html", gin.H{
+			"gin-web-api": "v0.01",
+			"goVersion":   runtime.Version(),
+		})
+	})
+
 	routes.RestaurantRoutes(r)
 	routes.UserRoutes(r)
 
+	r.LoadHTMLGlob("./public/html/*")
+	r.Static("/public", "./public")
+
+	r.NoRoute(func(c *gin.Context) {
+		c.HTML(404, "404.html", gin.H{})
+	})
 	r.Run(":" + port)
 
 }
