@@ -25,6 +25,7 @@ func main() {
 		port, os.Getenv("ENV"), os.Getenv("SSL"), os.Getenv("API_VERSION"))
 
 	db.Init()
+	db.InitRedis()
 
 	r := gin.Default()
 	r.Use(middlewares.CORSMiddleware())
@@ -43,15 +44,16 @@ func main() {
 		})
 	})
 
-	routes.RestaurantRoutes(r)
-	routes.UserRoutes(r)
-
 	r.LoadHTMLGlob("./public/html/*")
 	r.Static("/public", "./public")
 
 	r.NoRoute(func(c *gin.Context) {
 		c.HTML(404, "404.html", gin.H{})
 	})
+
+	routes.RestaurantRoutes(r)
+	routes.UserRoutes(r)
+
 	r.Run(":" + port)
 
 }
