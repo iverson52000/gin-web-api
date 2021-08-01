@@ -20,6 +20,8 @@ type UserLoginInput struct {
 	Password string `json:"password" binding:"required"`
 }
 
+// var userModel = new(models.UserModel)
+
 func Register(c *gin.Context) {
 	// Validate input
 	var input CreateUserInput
@@ -74,6 +76,15 @@ func Login(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "wrong password"})
 		return
 	}
+
+	// create and save token in redis
+	// userFromDB, token, err := userModel.CreateUserToken(int64(user.ID))
+	// if err != nil {
+	// 	c.AbortWithStatusJSON(http.StatusNotAcceptable, gin.H{"message": "Invalid login details"})
+	// 	return
+	// }
+
+	// fmt.Println(userFromDB, token)
 
 	c.JSON(http.StatusOK, gin.H{"message": "Login successiful"})
 }

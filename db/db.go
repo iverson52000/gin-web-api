@@ -10,7 +10,7 @@ import (
 
 var db *gorm.DB
 
-func Init() {
+func InitDB() {
 
 	// dbinfo := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable", os.Getenv("DB_USER"), os.Getenv("DB_PASS"), os.Getenv("DB_NAME"))
 	var err error

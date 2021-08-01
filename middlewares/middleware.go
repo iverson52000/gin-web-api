@@ -3,8 +3,12 @@ package middlewares
 import (
 	"fmt"
 
+	controllers "gin-web-api/controllers"
+
 	"github.com/gin-gonic/gin"
 )
+
+var auth = new(controllers.AuthController)
 
 //CORS Middleware(Cross-Origin Resource Sharing)
 func CORSMiddleware() gin.HandlerFunc {
@@ -22,5 +26,14 @@ func CORSMiddleware() gin.HandlerFunc {
 		} else {
 			c.Next()
 		}
+	}
+}
+
+//TokenAuthMiddleware ...
+//JWT Authentication middleware attached to each request that needs to be authenitcated to validate the access_token in the header
+func TokenAuthMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		auth.IsTokenValid(c)
+		c.Next()
 	}
 }

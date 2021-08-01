@@ -8,13 +8,13 @@ import (
 	_redis "github.com/go-redis/redis/v8"
 )
 
-//RedisClient ...
+// RedisClient
 var (
 	rdb *_redis.Client
-	Ctx = context.TODO()
+	ctx = context.Background()
 )
 
-//InitRedis ...
+// InitRedis
 func InitRedis() {
 
 	var redisHost = os.Getenv("REDIS_HOST")
@@ -36,7 +36,7 @@ func InitRedis() {
 		// },
 	})
 
-	if err := rdb.Ping(Ctx).Err(); err != nil {
+	if err := rdb.Ping(ctx).Err(); err != nil {
 		fmt.Println("[redis] ", err)
 		return
 	}
@@ -44,7 +44,7 @@ func InitRedis() {
 	fmt.Println("[redis] redis connected!")
 }
 
-//GetRedis ...
+// GetRedis
 func GetRedis() *_redis.Client {
 	return rdb
 }

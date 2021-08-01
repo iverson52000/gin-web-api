@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"gin-web-api/db"
 	"gin-web-api/middlewares"
+	"gin-web-api/models"
 	"gin-web-api/routes"
 	"log"
 	"net/http"
@@ -20,11 +21,15 @@ func main() {
 		log.Fatal("error: failed to load the env file")
 	}
 
+	if os.Getenv("ENV") == "PRODUCTION" {
+		gin.SetMode(gin.ReleaseMode)
+	}
+
 	port := os.Getenv("PORT")
 	fmt.Printf(" env vars: \n PORT: %s \n ENV: %s \n SSL: %s \n Version: %s \n\n",
 		port, os.Getenv("ENV"), os.Getenv("SSL"), os.Getenv("API_VERSION"))
 
-	db.Init()
+	db.InitDB()
 	db.InitRedis()
 
 	r := gin.Default()
@@ -53,6 +58,10 @@ func main() {
 
 	routes.RestaurantRoutes(r)
 	routes.UserRoutes(r)
+
+	var test models.AuthModel
+	td, _ := test.CreateToken(1)
+	fmt.Printf("%+v\n", td)
 
 	r.Run(":" + port)
 
