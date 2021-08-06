@@ -10,6 +10,8 @@ import (
 	"os"
 	"runtime"
 
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-contrib/sessions/redis"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
@@ -33,6 +35,8 @@ func main() {
 
 	r := gin.Default()
 	r.Use(middlewares.CORSMiddleware())
+	store, _ := redis.NewStore(10, "tcp", "localhost:6379", "", []byte("secret"))
+	r.Use(sessions.Sessions("mysession", store))
 
 	//testing route
 	r.GET("/", func(c *gin.Context) {

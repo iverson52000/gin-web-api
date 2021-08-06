@@ -11,7 +11,7 @@ func UserRoutes(r *gin.Engine) {
 	{
 		v.POST("/user/register", controllers.Register)
 		v.POST("/user/login", controllers.Login)
-		v.POST("/user/logout", controllers.Logout)
+		v.GET("/user/logout", controllers.Logout)
 		v.GET("/users", controllers.AllUser)
 	}
 }

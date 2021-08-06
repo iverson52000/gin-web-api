@@ -5,6 +5,7 @@ import (
 	"gin-web-api/models"
 	"net/http"
 
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -77,6 +78,10 @@ func Login(c *gin.Context) {
 		return
 	}
 
+	session := sessions.Default(c)
+	session.Set("id", user.ID)
+	session.Set("email", user.Email)
+	session.Save()
 	// create and save token in redis
 	// userFromDB, token, err := userModel.CreateUserToken(int64(user.ID))
 	// if err != nil {
@@ -90,6 +95,10 @@ func Login(c *gin.Context) {
 }
 
 func Logout(c *gin.Context) {
+	session := sessions.Default(c)
+	session.Clear()
+	session.Save()
+
 	c.JSON(http.StatusOK, gin.H{"message": "Successfully logged out!"})
 }
 

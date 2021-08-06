@@ -2,13 +2,11 @@ package middlewares
 
 import (
 	"fmt"
+	"net/http"
 
-	"gin-web-api/controllers"
-
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 )
-
-var auth = new(controllers.AuthController)
 
 //CORS Middleware(Cross-Origin Resource Sharing)
 func CORSMiddleware() gin.HandlerFunc {
@@ -29,11 +27,26 @@ func CORSMiddleware() gin.HandlerFunc {
 	}
 }
 
-//TokenAuthMiddleware ...
-//JWT Authentication middleware attached to each request that needs to be authenitcated to validate the access_token in the header
-func TokenAuthMiddleware() gin.HandlerFunc {
+func CookieAuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		auth.IsTokenValid(c)
-		c.Next()
+		session := sessions.Default(c)
+		sessionID := session.Get("id")
+		if sessionID == nil {
+			c.JSON(http.StatusNotFound, gin.H{
+				"message": "unauthorized",
+			})
+			c.Abort()
+		}
 	}
 }
+
+// var auth = new(controllers.AuthController)
+
+//TokenAuthMiddleware ...
+//JWT Authentication middleware attached to each request that needs to be authenitcated to validate the access_token in the header
+// func TokenAuthMiddleware() gin.HandlerFunc {
+// 	return func(c *gin.Context) {
+// 		auth.IsTokenValid(c)
+// 		c.Next()
+// 	}
+// }

@@ -50,3 +50,6 @@ content-type: application/json
     "email": "abc@gmail.com",
     "password": "123"
 }
+
+###
+GET http://localhost:9000/v1/user/logout HTTP/1.1
