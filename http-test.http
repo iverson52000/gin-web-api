@@ -2,17 +2,7 @@
 GET http://localhost:9000/v1/restaurants HTTP/1.1
 
 ###
-POST http://localhost:9000/v1/user/login HTTP/1.1
-content-type: application/json
-
-{
-    "email": "test2@test.com",
-    "password": "123456"
-}
-
-###
-POST https://localhost:9000/v1/user/register
-
+GET http://localhost:9000/v1/restaurant/1 HTTP/1.1
 
 ###
 POST http://localhost:9000/v1/restaurants HTTP/1.1
@@ -36,6 +26,8 @@ content-type: application/json
 
 ###
 DELETE  http://localhost:9000/v1/restaurant/2 HTTP/1.1
+
+
 
 ###
 POST  http://localhost:9000/v1/user/register HTTP/1.1

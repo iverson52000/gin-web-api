@@ -19,7 +19,7 @@ type AuthController struct{}
 
 var authModel = new(models.AuthModel)
 
-// TokenValid
+// IsTokenValid
 func (ctl AuthController) IsTokenValid(c *gin.Context) {
 
 	tokenAuth, err := authModel.ExtractTokenMetadata(c.Request)

@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"gin-web-api/db"
 	"gin-web-api/middlewares"
-	"gin-web-api/models"
 	"gin-web-api/routes"
 	"log"
 	"net/http"
@@ -59,9 +58,9 @@ func main() {
 	routes.RestaurantRoutes(r)
 	routes.UserRoutes(r)
 
-	var test models.AuthModel
-	td, _ := test.CreateToken(1)
-	fmt.Printf("%+v\n", td)
+	// var test models.AuthModel
+	// td, _ := test.CreateToken(1)
+	// fmt.Printf("%+v\n", td)
 
 	r.Run(":" + port)
 

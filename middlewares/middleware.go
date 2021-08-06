@@ -3,7 +3,7 @@ package middlewares
 import (
 	"fmt"
 
-	controllers "gin-web-api/controllers"
+	"gin-web-api/controllers"
 
 	"github.com/gin-gonic/gin"
 )
