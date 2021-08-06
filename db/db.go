@@ -17,8 +17,9 @@ func InitDB() {
 
 	db, err = gorm.Open(sqlite.Open("./db/sqliteDB.db"), &gorm.Config{})
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("[db] ", err)
 	}
+
 	fmt.Println("[db] db connected!")
 
 }

@@ -6,9 +6,7 @@ import (
 	"gin-web-api/middlewares"
 	"gin-web-api/routes"
 	"log"
-	"net/http"
 	"os"
-	"runtime"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/redis"
@@ -35,36 +33,18 @@ func main() {
 
 	r := gin.Default()
 	r.Use(middlewares.CORSMiddleware())
+
+	// store := cookie.NewStore([]byte("secret"))
 	store, _ := redis.NewStore(10, "tcp", "localhost:6379", "", []byte("secret"))
+	store.Options(sessions.Options{MaxAge: 60 * 60 * 24})
 	r.Use(sessions.Sessions("mysession", store))
-
-	//testing route
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "Gin is working!",
-		})
-	})
-
-	r.GET("/index", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.html", gin.H{
-			"gin-web-api": "v0.01",
-			"goVersion":   runtime.Version(),
-		})
-	})
 
 	r.LoadHTMLGlob("./public/html/*")
 	r.Static("/public", "./public")
 
-	r.NoRoute(func(c *gin.Context) {
-		c.HTML(404, "404.html", gin.H{})
-	})
-
+	routes.CommonRoutes(r)
 	routes.RestaurantRoutes(r)
 	routes.UserRoutes(r)
-
-	// var test models.AuthModel
-	// td, _ := test.CreateToken(1)
-	// fmt.Printf("%+v\n", td)
 
 	r.Run(":" + port)
 

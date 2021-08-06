@@ -34,8 +34,8 @@ POST  http://localhost:9000/v1/user/register HTTP/1.1
 content-type: application/json
 
 {
-    "name": "KFC",
-    "email": "abc@gmail.com",
+    "name": "MAC",
+    "email": "mac@gmail.com",
     "password": "123"
 }
 
@@ -53,3 +53,6 @@ content-type: application/json
 
 ###
 GET http://localhost:9000/v1/user/logout HTTP/1.1
+
+###
+GET http://localhost:9000/auth/test HTTP/1.1
