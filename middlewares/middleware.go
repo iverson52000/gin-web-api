@@ -40,7 +40,7 @@ func CookieAuthMiddleware() gin.HandlerFunc {
 	}
 }
 
-// var auth = new(controllers.AuthController)
+// var auth = &controllers.AuthController{}
 
 //TokenAuthMiddleware ...
 //JWT Authentication middleware attached to each request that needs to be authenitcated to validate the access_token in the header

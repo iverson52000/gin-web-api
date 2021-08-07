@@ -21,7 +21,7 @@ type UserLoginInput struct {
 	Password string `json:"password" binding:"required"`
 }
 
-// var userModel = new(models.UserModel)
+// var userModel = &models.UserModel{}
 
 func Register(c *gin.Context) {
 	// Validate input

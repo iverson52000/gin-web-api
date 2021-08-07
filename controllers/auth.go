@@ -17,7 +17,7 @@ type Token struct {
 
 type AuthController struct{}
 
-var authModel = new(models.AuthModel)
+var authModel = &models.AuthModel{}
 
 // IsTokenValid
 func (ctl AuthController) IsTokenValid(c *gin.Context) {

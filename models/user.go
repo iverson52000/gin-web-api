@@ -16,7 +16,7 @@ type User struct {
 	UpdatedAt time.Time
 }
 
-var authModel = new(AuthModel)
+var authModel = &AuthModel{}
 
 type UserModel struct{}
 
